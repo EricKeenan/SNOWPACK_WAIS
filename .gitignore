@@ -3,9 +3,7 @@
 # Don't track these directories
 usr/*
 input/*
+output/*
 
 # File exceptions
 !usr/.gitkeep
-!input/meteo/.gitkeep
-!input/snowfiles/.gitkeep
-!input/surface-grids/.gitkeep
