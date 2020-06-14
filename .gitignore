@@ -1,0 +1,5 @@
+# Don't track these directories
+usr/*
+
+# File exceptions
+!usr/.gitkeep
