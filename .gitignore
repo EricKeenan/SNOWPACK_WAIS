@@ -1,5 +1,9 @@
+# Don't track these files
+
 # Don't track these directories
 usr/*
+input/*
 
 # File exceptions
 !usr/.gitkeep
+!input/*/.gitkeep
