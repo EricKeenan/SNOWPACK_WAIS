@@ -31,21 +31,13 @@ export OMP_NUM_THREADS=4
 
 source timespan.inc
 
-PROG_ROOTDIR=../bin/
+PROG_ROOTDIR=$(pwd)/../usr/bin/
 
-# Make output directory
-mkdir -p /scratch/summit/erke2265/a3d_test_4core/output/grids
-mkdir -p /scratch/summit/erke2265/a3d_test_4core/output/snowfiles
-
-# Clear output directories 
-rm /scratch/summit/erke2265/a3d_test_4core/output/grids/* 
-rm /scratch/summit/erke2265/a3d_test_4core/output/snowfiles/*
-
-# Make binaries directory, clear, and copy
-mkdir -p /projects/erke2265/test_4core/bin/
-rm ../bin/*
-cp /projects/erke2265/src/AIS_snowpack/usr/bin/* ../bin/
-cp /projects/erke2265/src/AIS_snowpack/usr/lib/* ../bin/
+# Clear and create new output directory
+rm -rf ../output/
+mkdir -p ../output/grids
+mkdir -p ../output/snowfiles
+mkdir -p ../output/meteo
 
 #should screen messages be redirected to stdouterr.log or printed directly on the screen?
 REDIRECT_LOGS=Y
