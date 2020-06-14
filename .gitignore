@@ -6,4 +6,6 @@ input/*
 
 # File exceptions
 !usr/.gitkeep
-!input/*/.gitkeep
+!input/meteo/.gitkeep
+!input/snowfiles/.gitkeep
+!input/surface-grids/.gitkeep
