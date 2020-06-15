@@ -39,7 +39,7 @@ CMAKE_COLOR_MAKEFILE:BOOL=ON
 //CXX compiler
 CMAKE_CXX_COMPILER:FILEPATH=/curc/sw/intel/17.4/impi/2017.3.196/bin64/mpicxx
 
-CMAKE_CXX_FLAGS:STRING= -DENABLE_MPI -fopenmp -D_VERSION=3.10 -march=nocona -mtune=nocona   -DDEBUG_ARITHM
+CMAKE_CXX_FLAGS:STRING= -DENABLE_MPI -fopenmp -D_VERSION=3.10 -march=nocona -mtune=nocona   -DDEBUG_ARITHM -DSNOWPACK_CORE
 
 CMAKE_CXX_FLAGS_CXXFLAGS:STRING=
 
@@ -284,6 +284,9 @@ OPENMP:BOOL=ON
 //Compile with PETSc support ON or OFF
 PETSC:BOOL=OFF
 
+//SNOWPACK was compiled with core functionality only ON or OFF
+SNOWPACK_CORE:BOOL=ON
+
 //subversion command line client
 Subversion_SVN_EXECUTABLE:FILEPATH=/usr/bin/svn
 
@@ -508,6 +511,8 @@ MPI_RESULT_CXX_test_mpi_normal:INTERNAL=TRUE
 MPI_RESULT_C_test_mpi_normal:INTERNAL=TRUE
 //MODIFIED property for variable: OPENMP
 OPENMP-MODIFIED:INTERNAL=ON
+//MODIFIED property for variable: SNOWPACK_CORE
+SNOWPACK_CORE-MODIFIED:INTERNAL=ON
 //ADVANCED property for variable: Subversion_SVN_EXECUTABLE
 Subversion_SVN_EXECUTABLE-ADVANCED:INTERNAL=1
 VERSION_MAJOR:INTERNAL=3

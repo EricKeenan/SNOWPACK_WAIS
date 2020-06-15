@@ -219,6 +219,12 @@ LIBPROJ_INCLUDE_DIR:PATH=/curc/sw/proj/4.9.2/intel/17.4/include
 //Compilation METEOIO_TIMESERIES standalone ON or OFF
 METEOIO_TIMESERIES:BOOL=ON
 
+//Path to a file.
+NETCDF_INCLUDE_DIR:PATH=/curc/sw/netcdf/4.4.1.1/intel/17.4/include
+
+//Path to a library.
+NETCDF_LIBRARY:FILEPATH=/curc/sw/netcdf/4.4.1.1/intel/17.4/lib/libnetcdf.so
+
 //Compilation A3DIO ON or OFF
 PLUGIN_A3DIO:BOOL=ON
 
@@ -259,7 +265,7 @@ PLUGIN_GRIBIO:BOOL=OFF
 PLUGIN_IMISIO:BOOL=OFF
 
 //Compilation NETCDFIO ON or OFF
-PLUGIN_NETCDFIO:BOOL=OFF
+PLUGIN_NETCDFIO:BOOL=ON
 
 //Compilation OshdIO ON or OFF
 PLUGIN_OSHDIO:BOOL=OFF
@@ -307,7 +313,7 @@ XIAR:FILEPATH=/curc/sw/intel/17.4/compilers_and_libraries_2017.4.196/linux/bin/i
 meteoio_BINARY_DIR:STATIC=/projects/erke2265/SNOWPACK_WAIS/snowpack/Source/meteoio
 
 //Dependencies for the target
-meteoio_LIB_DEPENDS:STATIC=general;/curc/sw/proj/4.9.2/intel/17.4/lib/libproj.so;
+meteoio_LIB_DEPENDS:STATIC=general;/curc/sw/netcdf/4.4.1.1/intel/17.4/lib/libnetcdf.so;general;/curc/sw/proj/4.9.2/intel/17.4/lib/libproj.so;
 
 //Value Computed by CMake
 meteoio_SOURCE_DIR:STATIC=/projects/erke2265/SNOWPACK_WAIS/snowpack/Source/meteoio
@@ -460,6 +466,8 @@ DEST-MODIFIED:INTERNAL=ON
 DOXYGEN_DOT_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: DOXYGEN_EXECUTABLE
 DOXYGEN_EXECUTABLE-ADVANCED:INTERNAL=1
+//Details about finding NetCDF
+FIND_PACKAGE_MESSAGE_DETAILS_NetCDF:INTERNAL=[/curc/sw/netcdf/4.4.1.1/intel/17.4/lib/libnetcdf.so][/curc/sw/netcdf/4.4.1.1/intel/17.4/include][YES][v()]
 //Details about finding Subversion
 FIND_PACKAGE_MESSAGE_DETAILS_Subversion:INTERNAL=[/usr/bin/svn][v1.7.14()]
 //Test HAVE_FEENABLE
@@ -470,6 +478,16 @@ HAVE_STRUCT_STAT_ST_FLAGS:INTERNAL=
 LIBPROJ-MODIFIED:INTERNAL=ON
 //MODIFIED property for variable: LIBPROJ_INCLUDE_DIR
 LIBPROJ_INCLUDE_DIR-MODIFIED:INTERNAL=ON
+//ADVANCED property for variable: NETCDF_INCLUDE_DIR
+NETCDF_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//MODIFIED property for variable: NETCDF_INCLUDE_DIR
+NETCDF_INCLUDE_DIR-MODIFIED:INTERNAL=ON
+//ADVANCED property for variable: NETCDF_LIBRARY
+NETCDF_LIBRARY-ADVANCED:INTERNAL=1
+//MODIFIED property for variable: NETCDF_LIBRARY
+NETCDF_LIBRARY-MODIFIED:INTERNAL=ON
+//MODIFIED property for variable: PLUGIN_NETCDFIO
+PLUGIN_NETCDFIO-MODIFIED:INTERNAL=ON
 //MODIFIED property for variable: PROJ4
 PROJ4-MODIFIED:INTERNAL=ON
 //ADVANCED property for variable: Subversion_SVN_EXECUTABLE

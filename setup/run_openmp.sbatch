@@ -4,21 +4,16 @@
 ########################## START  USER CONFIGURATION
 
 #SBATCH --nodes=1                         # Number of requested nodes
-
 ##SBATCH --time=23:59:59                   # Max wall time
 #SBATCH --time=00:15:00                   # Max wall time
-
 ##SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --qos=testing                      # Specify testing QOS
-
 ##SBATCH --partition=shas                  # Specify Summit haswell nodes
 #SBATCH --partition=shas-testing                  # Specify Summit haswell nodes
-
 #SBATCH --ntasks=16                       # Number of tasks per job
 
 #SBATCH --job-name=alpine3d_test          # Job submission name
-#SBATCH --output=alpine3d_test.%j.out     # Output file name with Job ID
-
+#SBATCH --output=../output/log/%x.%j.out     # Output file name with Job ID
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=eric.keenan@colorado.edu
 
@@ -34,9 +29,12 @@ source timespan.inc
 PROG_ROOTDIR=$(pwd)/../usr/bin/
 
 # Clear and create new output directory
-rm -rf ../output/
+rm -rf ../output/grids
+rm -rf ../output/snofiles
+rm -rf ../outout/meteo
+
 mkdir -p ../output/grids
-mkdir -p ../output/snowfiles
+mkdir -p ../output/snofiles
 mkdir -p ../output/meteo
 
 #should screen messages be redirected to stdouterr.log or printed directly on the screen?
@@ -69,7 +67,7 @@ A3D_CMD="${TOOL} ${EXE} \
 
 date
 if [[ ("${REDIRECT_LOGS}" == "Y") ||  ("${REDIRECT_LOGS}" == "y") ]]; then
-	${A3D_CMD} > stdouterr.log 2>&1 $*
+	${A3D_CMD} > ../output/log/stdouterr.log 2>&1 $*
 else
 	${A3D_CMD} 2>&1 $*
 fi
