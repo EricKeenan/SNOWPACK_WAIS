@@ -1,0 +1,15 @@
+name: alpine3d
+channels:
+  - defaults
+dependencies:
+  - python=3.6
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - cartopy
+  - xarray
+  - ipykernel
+  - geopandas
+prefix: /projects/erke2265/miniconda/envs/alpine3d
+

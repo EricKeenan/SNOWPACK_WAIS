@@ -4,6 +4,7 @@
 usr/*
 input/*
 output/*
+analysis/.ipynb_checkpoints/*
 
 # File exceptions
 !usr/.gitkeep
