@@ -2,14 +2,16 @@
 
 1. Clone SNOWPACK github repository as a git submodule. Then checkout the `snowpack_core` branch.
 ```
-git submodule add https://github.com/snowpack-model/snowpack.git 
+git submodule init
+git submodule update
+cd snowpack
 git checkout snowpack_core
 ```
 2. Compile MeteoIO
 ```
 ssh scompile
 ml intel; ml impi; ml proj; ml cmake; ml netcdf
-cd snowpack/Source/meteoio
+cd Source/meteoio
 cp ../../../CMake_Cache/CMakeCache_meteoio.txt CMakeCache.txt
 ccmake .
 ```
