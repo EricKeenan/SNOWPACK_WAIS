@@ -4,12 +4,13 @@
 ########################## START  USER CONFIGURATION
 
 #SBATCH --nodes=1                         # Number of requested nodes
+#SBATCH --account=ucb164_summit1
 ##SBATCH --time=23:59:59                   # Max wall time
-#SBATCH --time=00:15:00                   # Max wall time
+#SBATCH --time=01:00:00                   # Max wall time
 ##SBATCH --qos=normal                      # Specify testing QOS
-#SBATCH --qos=testing                      # Specify testing QOS
-##SBATCH --partition=shas                  # Specify Summit haswell nodes
-#SBATCH --partition=shas-testing                  # Specify Summit haswell nodes
+##SBATCH --qos=testing                      # Specify testing QOS
+#SBATCH --partition=shas                  # Specify Summit haswell nodes
+##SBATCH --partition=shas-testing                  # Specify Summit haswell nodes
 #SBATCH --ntasks=16                       # Number of tasks per job
 
 #SBATCH --job-name=alpine3d_test          # Job submission name
@@ -19,7 +20,7 @@
 
 # purge all exisitng modules
 module purge
-ml intel; ml impi; ml proj; ml netcdf
+ml gcc; ml impi; ml proj; ml netcdf
 
 # set thread count for openmp
 export OMP_NUM_THREADS=4
@@ -38,16 +39,18 @@ mkdir -p ../output/snofiles
 mkdir -p ../output/meteo
 
 #should screen messages be redirected to stdouterr.log or printed directly on the screen?
-REDIRECT_LOGS=Y
+REDIRECT_LOGS=N
 
 ########################## END OF USER CONFIGURATION
-
-export DYLD_FALLBACK_LIBRARY_PATH=${PROG_ROOTDIR}:${DYLD_FALLBACK_LIBRARY_PATH}	#for osX
-export LD_LIBRARY_PATH=${PROG_ROOTDIR}:${LD_LIBRARY_PATH}	#for Linux
+export LD_LIBRARY_PATH=../usr/lib:${LD_LIBRARY_PATH}
+#export LD_LIBRARY_PATH=../snowpack/Source/alpine3d/lib/:${LD_LIBRARY_PATH}
+#export LD_LIBRARY_PATH=${PROG_ROOTDIR}:${LD_LIBRARY_PATH}	#for Linux
 EXE="${PROG_ROOTDIR}/alpine3d"
+
 if [ ! -f ${EXE} ]; then
 	EXE=`which alpine3d`
 fi
+
 N_EB=1
 N_SN=1
 
@@ -56,7 +59,6 @@ N_EB=$OMP_NUM_THREADS
 N_SN=$OMP_NUM_THREADS
 
 TOOL="/usr/bin/time -v"
-
 
 A3D_CMD="${TOOL} ${EXE} \
 --iofile=./io.ini \
