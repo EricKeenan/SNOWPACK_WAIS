@@ -5,12 +5,9 @@
 
 #SBATCH --nodes=1                         # Number of requested nodes
 #SBATCH --account=ucb164_summit1
-##SBATCH --time=23:59:59                   # Max wall time
 #SBATCH --time=01:00:00                   # Max wall time
-##SBATCH --qos=normal                      # Specify testing QOS
-##SBATCH --qos=testing                      # Specify testing QOS
+#SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
-##SBATCH --partition=shas-testing                  # Specify Summit haswell nodes
 #SBATCH --ntasks=16                       # Number of tasks per job
 
 #SBATCH --job-name=alpine3d_test          # Job submission name
@@ -18,16 +15,21 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=eric.keenan@colorado.edu
 
-# purge all exisitng modules
+# Exit any conda environment
+conda deactivate 
+
+# purge all exisitng modules and add ones required
 module purge
-ml gcc; ml impi; ml proj; ml netcdf
+ml intel; ml impi; ml proj; ml netcdf
 
 # set thread count for openmp
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=$(nproc)
 
+# Get simulation start and stop times
 source timespan.inc
 
-PROG_ROOTDIR=$(pwd)/../usr/bin/
+# Alpine-3D binary directory
+PROG_ROOTDIR=$(pwd)/../snowpack/usr/bin/
 
 # Clear and create new output directory
 rm -rf ../output/grids
@@ -42,17 +44,14 @@ mkdir -p ../output/meteo
 REDIRECT_LOGS=N
 
 ########################## END OF USER CONFIGURATION
-export LD_LIBRARY_PATH=../usr/lib:${LD_LIBRARY_PATH}
-#export LD_LIBRARY_PATH=../snowpack/Source/alpine3d/lib/:${LD_LIBRARY_PATH}
-#export LD_LIBRARY_PATH=${PROG_ROOTDIR}:${LD_LIBRARY_PATH}	#for Linux
+export LD_LIBRARY_PATH=../snowpack/usr/lib:${LD_LIBRARY_PATH}
+
+# Alpine-3D binary 
 EXE="${PROG_ROOTDIR}/alpine3d"
 
 if [ ! -f ${EXE} ]; then
 	EXE=`which alpine3d`
 fi
-
-N_EB=1
-N_SN=1
 
 echo "Running with OPENMP"
 N_EB=$OMP_NUM_THREADS

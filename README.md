@@ -10,6 +10,8 @@ git clone https://github.com/EricKeenan/SNOWPACK_WAIS.git
 ```
 bash copy_input.sh
 ```
-4. Launch Alpine-3D mimumum working example using `openmp`
+4. Launch Alpine-3D mimumum working example using `openmp`. Make sure you are not in a conda environment.
 ```
+conda deactivate
 sbatch run_openmp.sbatch
+```
