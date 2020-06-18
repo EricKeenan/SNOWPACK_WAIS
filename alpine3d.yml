@@ -11,5 +11,7 @@ dependencies:
   - xarray
   - ipykernel
   - geopandas
+  - moviepy
+  - palettable
 prefix: /projects/erke2265/miniconda/envs/alpine3d
 
