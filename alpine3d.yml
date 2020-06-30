@@ -13,5 +13,7 @@ dependencies:
   - geopandas
   - moviepy
   - palettable
+  - dask
+  - netcdf4
 prefix: /projects/erke2265/miniconda/envs/alpine3d
 

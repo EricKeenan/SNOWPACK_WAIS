@@ -5,6 +5,7 @@
 input/*
 output/*
 analysis/.ipynb_checkpoints/*
+analysis/dask-worker-space/*
 
 # File exceptions
 !output/log/.gitkeep
