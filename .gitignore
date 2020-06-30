@@ -6,6 +6,8 @@ input/*
 output/*
 analysis/.ipynb_checkpoints/*
 analysis/dask-worker-space/*
+spinup/io/*
 
 # File exceptions
 !output/log/.gitkeep
+!spinup/io/base.ini
