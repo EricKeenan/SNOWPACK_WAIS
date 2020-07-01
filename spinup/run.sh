@@ -2,18 +2,19 @@
 
 # Settings
 tool="/usr/bin/time -v"
-bin_path="/projects/erke2265/src/AIS_snowpack/usr/bin/snowpack"
+bin_path=$(pwd)/../snowpack/usr/bin/snowpack
 start="1980-01-01T00:00:00"
 end="2017-12-31T23:30:00"
 thresh=950
 
 # Misc
-base_dir=$(pwd)
-rm to_exec.lst
-rm to_exec2.lst
+rm -f to_exec1.lst
+rm -f to_exec2.lst
+base_dir=$(pwd)/io/
+cd ${base_dir}
 
 # Run SNOWPACK in a loop
-for dir in *[^io]/ ; do
+for dir in */ ; do
 	echo "Working on: ${dir}"
 	output_path=${base_dir}/${dir}output/
 	input_path=${base_dir}/${dir}input/
@@ -23,8 +24,8 @@ for dir in *[^io]/ ; do
 	# then add commands to start simulation!
 	if [ -z "$(ls -A ${output_path})" ] ; then # Output directory is empty
 		echo "	Simulation has not started"
-		echo "cd ${input_path}" >> to_exec.lst
-		echo "${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1" >> to_exec2.lst
+		echo "cd ${input_path}" >> ../to_exec1.lst
+		echo "${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1" >> ../to_exec2.lst
 	else # Output directory is not empty
 		echo "	Simulation already started"
 		pro_file=$(ls -t ${output_path}*pro | head -1)
@@ -41,7 +42,7 @@ for dir in *[^io]/ ; do
 			cp ${sno_file} ${input_path} 
 			sno_file=$(ls ${input_path}*sno* | tail -1)
 			mv ${sno_file} ${sno_file::(-7)} # Remove 7 numbers from the file exstension
-			echo "${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1" >> to_exec2.lst
+			echo "${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1" >> ../to_exec2.lst
 		fi
 	
 	fi
@@ -60,8 +61,8 @@ for dir in *[^io]/ ; do
 		mv ${input_path}/tmp.sno ${input_path}${sno_file_base_name} 
 
 		# Launch SNOWPACK
-                echo "cd ${input_path}" >> to_exec.lst
-                echo "${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1" >> to_exec2.lst
+                echo "cd ${input_path}" >> ../to_exec1.lst
+                echo "${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1" >> ../to_exec2.lst
 	fi
 done
 
