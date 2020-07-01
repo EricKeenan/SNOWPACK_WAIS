@@ -1,11 +1,10 @@
 # Instructions for compiling and installing MeteoIO, SNOWPACK, and Alpine3D. 
 
-1. Clone SNOWPACK github repository as a git submodule. Then checkout the `snowpack_core` branch.
+1. Clone SNOWPACK github repository as a git submodule.
 ```
 git submodule init
 git submodule update
 cd snowpack
-git checkout snowpack_core
 ```
 2. Compile MeteoIO
 ```
