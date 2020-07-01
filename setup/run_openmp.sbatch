@@ -75,6 +75,12 @@ fi
 ret=$?
 
 echo "Done Alpine3D Simulation. Return code=$ret"
+
+# Copy output to peta library
+d=$(date +%Y-%m-%d)
+mkdir -p /pl/active/nasa_smb/A3D_output/${d}/
+cp -r ../output /pl/active/nasa_smb/A3D_output/${d}/
+
 date
 echo
 exit $ret
