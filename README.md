@@ -18,6 +18,14 @@ Create input surface grids by navigating into the  `setup/input_surface_grids/` 
 ```
 bash create_input_surface_grids.sh
 ```
+
+Then create atmospheric forcing by first defining `snowpack/Scripts/create_smet_from_netcdf/station_list.lst` by running `setup/input_atmospheric_forcing/write_station_list.ipynb`. Then copy the station list into correct location. 
+```
+cp ../../../setup/input_atmospheric_forcing/station_list.lst .
+```
+
+Then follow the instructions at `snowpack/Scripts/create_smet_from_netcdf/README.md` to create atmospheric forcing `.smet` files. Note that you will likely need to make a few changes to `snowpack/Scripts/create_smet_from_netcdf/io_files/MERRA-2.ini` including updating the 4 relative paths which point to .nc files, updating `Virtual parameters` to `Virtual_parameters      =       TA QI VW DW ISWR ILWR PSUM`, as well as updating job.sbatch to the appropriate `slurm` settings. 
+
 4. Launch Alpine-3D mimumum working example using `openmp`. Make sure you are not in a conda environment.
 ```
 conda deactivate
