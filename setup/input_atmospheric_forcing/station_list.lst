@@ -1,0 +1,20 @@
+[INPUT]
+VSTATION1 = latlon -77.0 -94.375 0
+VSTATION2 = latlon -77.0 -93.75 0
+VSTATION3 = latlon -77.0 -93.125 0
+VSTATION4 = latlon -77.0 -92.5 0
+VSTATION5 = latlon -77.0 -91.875 0
+VSTATION6 = latlon -77.0 -91.25 0
+VSTATION7 = latlon -77.0 -90.625 0
+VSTATION8 = latlon -76.5 -93.75 0
+VSTATION9 = latlon -76.5 -93.125 0
+VSTATION10 = latlon -76.5 -92.5 0
+VSTATION11 = latlon -76.5 -91.875 0
+VSTATION12 = latlon -76.5 -91.25 0
+VSTATION13 = latlon -76.5 -90.625 0
+VSTATION14 = latlon -76.0 -93.75 0
+VSTATION15 = latlon -76.0 -93.125 0
+VSTATION16 = latlon -76.0 -92.5 0
+VSTATION17 = latlon -76.0 -91.875 0
+VSTATION18 = latlon -76.0 -91.25 0
+VSTATION19 = latlon -76.0 -90.625 0
