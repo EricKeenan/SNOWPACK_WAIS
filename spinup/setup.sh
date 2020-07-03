@@ -9,6 +9,8 @@ ind0=1
 indf=$(ls ${base_dir}/../input/meteo/*.smet | wc -l)
 start_time="1980-01-01T00:00:00"
 
+mkdir -p io/sbatch_out_files
+
 # Loop through each MERRA-2 grid cell inside of the MERRA-2 domain
 for site in $(seq ${ind0} ${indf}); do 
 	echo "Working on site ${site}"

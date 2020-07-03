@@ -18,10 +18,5 @@ module purge
 ml intel
 ml proj
 
-# Retrieve commands from .lst files
-command1=$(sed -n ${SLURM_ARRAY_TASK_ID}p to_exec1.lst)
-command2=$(sed -n ${SLURM_ARRAY_TASK_ID}p to_exec2.lst)
-
-# Execute commands
-eval ${command1}
-eval ${command2}
+# Run SNOWPACK
+bash run.sh site_${SLURM_ARRAY_TASK_ID}
