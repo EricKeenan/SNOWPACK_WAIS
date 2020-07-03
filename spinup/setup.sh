@@ -22,7 +22,7 @@ for site in $(seq ${ind0} ${indf}); do
 	
 	# Define site variables	
 	site_name=A3D_site_${site}
-	smet_path=../input/meteo/A3D_site_${site}.smet
+	smet_path=../input/meteo/VIR${site}.smet
 	lat_str="$(sed -n '/latitude/p' ${smet_path})"
 	lon_str="$(sed -n '/longitude/p' ${smet_path})"
 	altitude_str="$(sed -n '/altitude/p' ${smet_path})"
@@ -39,7 +39,7 @@ for site in $(seq ${ind0} ${indf}); do
 		
 		# Copy input files into input directory.
 		cp ../base.ini input/
-		cp ../../../input/meteo/A3D_site_${site}.smet input/
+		cp ../../../input/meteo/VIR${site}.smet input/${site_name}.smet
 		python3 ../../write_sno.py ${site_name} ${lon} ${lat} ${altitude} ${start_time} ./input/ 
 		python3 ../../write_ini.py ${site_name} ${lat} ${lon} ./input/
 	else

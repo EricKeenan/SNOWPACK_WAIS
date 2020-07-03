@@ -6,7 +6,7 @@
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
 #SBATCH --ntasks=1                        # Number of tasks per job
-#SBATCH --array=1-4
+#SBATCH --array=1-64
 
 #SBATCH --job-name=A3D_spinup             # Job submission name
 #SBATCH --output=./io/sbatch_out_files/%x.%j.out     # Output file name with Job ID

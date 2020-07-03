@@ -46,7 +46,10 @@ f.write("SNOW_EROSION_FETCH_LENGTH = 10 \n")
 f.write("\n")
 
 f.write("[GENERATORS]\n")
-f.write("TSG::cst::value    =    " + str(T_s))
+f.write("TSG::cst::value    =    " + str(T_s) + "\n")
+f.write("RH::generators                  =       HUMIDITY\n")
+f.write("RH::humidity::type              =       RH\n")
+
 
 # Close file 
 f.close()
