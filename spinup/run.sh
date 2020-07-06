@@ -57,6 +57,7 @@ while (( $(echo "${depth_tgt_time} < ${thresh}" | bc -l) )); do # Restart simula
 	# Move latest .sno file into input
 	rm *.sno
 	cp ../output/*sno A3D_${site}.sno
+	rm ../output/*
 	
 	# Change the dates in the .sno file
 	sno_file=$(ls -t *sno)
