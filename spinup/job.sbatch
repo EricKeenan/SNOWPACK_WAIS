@@ -6,7 +6,7 @@
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
 #SBATCH --ntasks=1                        # Number of tasks per job
-#SBATCH --array=1-64
+#SBATCH --array=1-32
 
 #SBATCH --job-name=A3D_spinup             # Job submission name
 #SBATCH --output=./io/sbatch_out_files/%x.%j.out     # Output file name with Job ID
@@ -19,4 +19,5 @@ ml intel
 ml proj
 
 # Run SNOWPACK
-bash run.sh site_${SLURM_ARRAY_TASK_ID}
+command1="$(sed -n ${SLURM_ARRAY_TASK_ID}p to_exec.lst)"
+${command1}

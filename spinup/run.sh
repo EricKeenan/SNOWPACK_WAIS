@@ -22,10 +22,13 @@ depth_tgt_time=0
 if [ -z "$(ls -A ../output/)" ] ; then # Output directory is empty
 	echo "  Simulation has not started"
 	${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1
+	pro_file=$(ls -t ../output/*.pro | head -1)
+        depth_tgt_time=$(awk -v d="${end}" -F, 'BEGIN {p=0} {if(/^0500/ && sprintf("%04d-%02d-%02d", substr($NF,7,4), substr($NF,4,2), substr($NF,1,2))==substr(d,1,10)) {p=1}; if(p==1 && /^0501/) {print $NF; exit}}' ${pro_file})
+
 else # Output directory is not empty
 	echo "  Simulation already started"
 	pro_file=$(ls -t ../output/*.pro | head -1)
-	depth_tgt_time=$(awk -v d="${start}" -F, 'BEGIN {p=0} {if(/^0500/ && sprintf("%04d-%02d-%02d", substr($NF,7,4), substr($NF,4,2), substr($NF,1,2))==substr(d,1,10)) {p=1}; if(p==1 && /^0501/) {print $NF; exit}}' ${pro_file})
+	depth_tgt_time=$(awk -v d="${end}" -F, 'BEGIN {p=0} {if(/^0500/ && sprintf("%04d-%02d-%02d", substr($NF,7,4), substr($NF,4,2), substr($NF,1,2))==substr(d,1,10)) {p=1}; if(p==1 && /^0501/) {print $NF; exit}}' ${pro_file})
 	echo "	Starting depth = ${depth_tgt_time} m"
 
 	# Restart an unfinished simulation
@@ -36,9 +39,7 @@ else # Output directory is not empty
 		echo "	Latest simulation did not finish" # Restart unfinished simulation
 		sno_file=$(ls ../output/*sno* | tail -1)
 		rm *.sno
-		cp ${sno_file} . 
-		sno_file=$(ls *sno* | tail -1)
-		mv ${sno_file} ${sno_file::(-9)} # Remove 9 numbers from the file exstension
+		cp ${sno_file} A3D_${site}.sno
 		${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1
 	fi
 fi
@@ -55,7 +56,7 @@ while (( $(echo "${depth_tgt_time} < ${thresh}" | bc -l) )); do # Restart simula
 
 	# Move latest .sno file into input
 	rm *.sno
-	cp ../output/*sno .
+	cp ../output/*sno A3D_${site}.sno
 	
 	# Change the dates in the .sno file
 	sno_file=$(ls -t *sno)
@@ -67,14 +68,14 @@ while (( $(echo "${depth_tgt_time} < ${thresh}" | bc -l) )); do # Restart simula
 	# Launch SNOWPACK
 	${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1
 
-		# Update depth_target_time
+	# Update depth_target_time
 	pro_file=$(ls -t ../output/*.pro | head -1)
-        depth_tgt_time=$(awk -v d="${start}" -F, 'BEGIN {p=0} {if(/^0500/ && sprintf("%04d-%02d-%02d", substr($NF,7,4), substr($NF,4,2), substr($NF,1,2))==substr(d,1,10)) {p=1}; if(p==1 && /^0501/) {print $NF; exit}}' ${pro_file})	
+        depth_tgt_time=$(awk -v d="${end}" -F, 'BEGIN {p=0} {if(/^0500/ && sprintf("%04d-%02d-%02d", substr($NF,7,4), substr($NF,4,2), substr($NF,1,2))==substr(d,1,10)) {p=1}; if(p==1 && /^0501/) {print $NF; exit}}' ${pro_file})	
 done
 
 # Prepare sno file for Alpine-3D
 cp ../output/*sno ..
-mv ../*sno tmp.sno
-bash ../../../shift_profile.sh tmp.sno ${start} > ../thwaites_${site: -1}.snoash ../../../shift_profile.sh tmp.sno ${start} > thwaites_${site: -1}.sno
-
+mv ../*sno ../tmp.sno
+bash ../../../shift_profile.sh ../tmp.sno ${start} > ../thwaites_${site: 5}.sno 
+rm ../tmp.sno
 
