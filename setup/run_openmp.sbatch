@@ -5,7 +5,7 @@
 
 #SBATCH --nodes=1                         # Number of requested nodes
 #SBATCH --account=ucb164_summit1
-#SBATCH --time=24:00:00                   # Max wall time
+#SBATCH --time=04:00:00                   # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
 #SBATCH --ntasks=24                       # Number of tasks per job
@@ -14,9 +14,6 @@
 #SBATCH --output=../output/log/%x.%j.out     # Output file name with Job ID
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=eric.keenan@colorado.edu
-
-# Exit any conda environment
-conda deactivate 
 
 # purge all exisitng modules and add ones required
 module purge
@@ -35,10 +32,12 @@ PROG_ROOTDIR=$(pwd)/../snowpack/usr/bin/
 rm -rf ../output/grids
 rm -rf ../output/snofiles
 rm -rf ../outout/meteo
+rm -rf ../outout/log/*
 
 mkdir -p ../output/grids
 mkdir -p ../output/snofiles
 mkdir -p ../output/meteo
+mkdir -p ../output/log
 
 #should screen messages be redirected to stdouterr.log or printed directly on the screen?
 REDIRECT_LOGS=N
