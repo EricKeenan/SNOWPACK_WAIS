@@ -1,6 +1,9 @@
 # Don't track Jupyer notebook checkpoints
 .ipynb_checkpoints
 
+# Dont track these file extensions
+*.nc
+
 # Don't track these directories
 input/*
 output/*
