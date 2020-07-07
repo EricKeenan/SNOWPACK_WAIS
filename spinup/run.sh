@@ -45,7 +45,7 @@ else # Output directory is not empty
 fi
 	
 # Restart spinup if necessary
-while (( $(echo "${depth_tgt_time} < ${thresh}" | bc -l) )); do # Restart simulation in 1980 if needed
+while [ "$(bc <<< "$depth_tgt_time < $thresh")" == "1"  ]; do
 	# Break out of while loop if there is not enough time to save .sno output
 	if [ $(date '+%s') -lt "${max_start}" ]; then
 		echo "  Needs spinup"
