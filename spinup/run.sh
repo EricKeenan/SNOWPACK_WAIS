@@ -13,6 +13,7 @@ max_start=$(date +%s -d "+23 hours +30 minutes")
 # Misc
 base_dir=$(pwd)/io/
 cd ${base_dir}${site}/input/
+shopt -s extglob
 
 # Run SNOWPACK
 echo Working on ${site}
@@ -41,6 +42,7 @@ else # Output directory is not empty
 		rm *.sno
 		cp ${sno_file} A3D_${site}.sno
 		${tool} ${bin_path} -r -c run.ini -e ${end} >> ../output/log.txt 2>&1
+		depth_tgt_time=$(awk -v d="${end}" -F, 'BEGIN {p=0} {if(/^0500/ && sprintf("%04d-%02d-%02d", substr($NF,7,4), substr($NF,4,2), substr($NF,1,2))==substr(d,1,10)) {p=1}; if(p==1 && /^0501/) {print $NF; exit}}' ${pro_file})
 	fi
 fi
 	
@@ -49,6 +51,7 @@ while [ "$(bc <<< "$depth_tgt_time < $thresh")" == "1"  ]; do
 	# Break out of while loop if there is not enough time to save .sno output
 	if [ $(date '+%s') -lt "${max_start}" ]; then
 		echo "  Needs spinup"
+		echo $depth_tgt_time
 	else
 		echo "	Ran out of spinup wall clock time"
 		break
@@ -57,7 +60,9 @@ while [ "$(bc <<< "$depth_tgt_time < $thresh")" == "1"  ]; do
 	# Move latest .sno file into input
 	rm *.sno
 	cp ../output/*sno A3D_${site}.sno
-	rm ../output/*
+	pushd ../output
+	rm -v !("log.txt")
+	popd
 	
 	# Change the dates in the .sno file
 	sno_file=$(ls -t *sno)

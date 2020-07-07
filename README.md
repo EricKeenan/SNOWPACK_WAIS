@@ -1,3 +1,5 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/EricKeenan/SNOWPACK_WAIS/master)
+
 # Distributed surface mass balance modeling over the West Antarctic ice sheet using SNOWPACK and Alpine3D
 
 ## Instructions 
