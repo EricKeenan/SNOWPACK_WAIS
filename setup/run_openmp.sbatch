@@ -31,8 +31,8 @@ PROG_ROOTDIR=$(pwd)/../snowpack/usr/bin/
 # Clear and create new output directory
 rm -rf ../output/grids
 rm -rf ../output/snofiles
-rm -rf ../outout/meteo
-rm -rf ../outout/log/*
+rm -rf ../output/meteo
+rm -rf ../output/log/*
 
 mkdir -p ../output/grids
 mkdir -p ../output/snofiles
@@ -79,6 +79,9 @@ echo "Done Alpine3D Simulation. Return code=$ret"
 d=$(date +%Y-%m-%d)
 mkdir -p /pl/active/nasa_smb/A3D_output/${d}/
 cp -r ../output /pl/active/nasa_smb/A3D_output/${d}/
+
+# Copy output .nc file to dropbox
+dbxcli put ../output/grids/a3d_grids.nc /Public/a3d_grids.nc
 
 date
 echo
