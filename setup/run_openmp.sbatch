@@ -8,7 +8,7 @@
 #SBATCH --time=01:30:00                   # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
-#SBATCH --ntasks=4                       # Number of tasks per job
+#SBATCH --ntasks=8                       # Number of tasks per job
 
 #SBATCH --job-name=alpine3d_test          # Job submission name
 #SBATCH --output=../output/log/%x.%j.out     # Output file name with Job ID
@@ -60,12 +60,10 @@ if [[ ("${RESTART}" == "N") ]]; then
 	rm -rf ../output/grids
 	rm -rf ../output/snofiles
 	rm -rf ../output/meteo
-	rm -rf ../output/log/*
 
 	mkdir -p ../output/grids
 	mkdir -p ../output/snofiles
 	mkdir -p ../output/meteo
-	mkdir -p ../output/log
 
 else
 	# Get simulation start and stop times
