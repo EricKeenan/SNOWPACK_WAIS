@@ -5,10 +5,10 @@
 
 #SBATCH --nodes=1                         # Number of requested nodes
 #SBATCH --account=ucb164_summit1
-#SBATCH --time=04:00:00                   # Max wall time
+#SBATCH --time=01:30:00                   # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
-#SBATCH --ntasks=24                       # Number of tasks per job
+#SBATCH --ntasks=4                       # Number of tasks per job
 
 #SBATCH --job-name=alpine3d_test          # Job submission name
 #SBATCH --output=../output/log/%x.%j.out     # Output file name with Job ID
@@ -22,25 +22,12 @@ ml intel; ml impi; ml proj; ml netcdf
 # set thread count for openmp
 export OMP_NUM_THREADS=$(nproc)
 
-# Get simulation start and stop times
-source timespan.inc
-
 # Alpine-3D binary directory
 PROG_ROOTDIR=$(pwd)/../snowpack/usr/bin/
 
-# Clear and create new output directory
-rm -rf ../output/grids
-rm -rf ../output/snofiles
-rm -rf ../output/meteo
-rm -rf ../output/log/*
-
-mkdir -p ../output/grids
-mkdir -p ../output/snofiles
-mkdir -p ../output/meteo
-mkdir -p ../output/log
-
 #should screen messages be redirected to stdouterr.log or printed directly on the screen?
 REDIRECT_LOGS=N
+RESTART=Y
 
 ########################## END OF USER CONFIGURATION
 export LD_LIBRARY_PATH=../snowpack/usr/lib:${LD_LIBRARY_PATH}
@@ -58,12 +45,44 @@ N_SN=$OMP_NUM_THREADS
 
 TOOL="/usr/bin/time -v"
 
-A3D_CMD="${TOOL} ${EXE} \
---iofile=./io.ini \
---enable-eb  \
---np-ebalance=${N_EB} \
---np-snowpack=${N_SN} \
---startdate=${BEGIN} --enddate=${END}"
+if [[ ("${RESTART}" == "N") ]]; then
+	# Get simulation start and stop times
+	source timespan.inc
+
+	A3D_CMD="${TOOL} ${EXE} \
+	--iofile=./io.ini \
+	--enable-eb  \
+	--np-ebalance=${N_EB} \
+	--np-snowpack=${N_SN} \
+	--startdate=${BEGIN} --enddate=${END}"
+	
+	# Clear and create new output directory
+	rm -rf ../output/grids
+	rm -rf ../output/snofiles
+	rm -rf ../output/meteo
+	rm -rf ../output/log/*
+
+	mkdir -p ../output/grids
+	mkdir -p ../output/snofiles
+	mkdir -p ../output/meteo
+	mkdir -p ../output/log
+
+else
+	# Get simulation start and stop times
+	cp timespan.inc restart_timespan.inc
+	file=$(ls ../output/snofiles/1_1_* | head -1)
+	line=$(sed -n '/ProfileDate/p' $file)
+	sed -i "s/1980-01-01T01:00/${line: 19}/g" restart_timespan.inc
+	source restart_timespan.inc
+
+        A3D_CMD="${TOOL} ${EXE} \
+        --iofile=./restart.ini \
+        --enable-eb  \
+	--restart \
+        --np-ebalance=${N_EB} \
+        --np-snowpack=${N_SN} \
+        --startdate=${BEGIN} --enddate=${END}"
+fi
 
 date
 if [[ ("${REDIRECT_LOGS}" == "Y") ||  ("${REDIRECT_LOGS}" == "y") ]]; then
