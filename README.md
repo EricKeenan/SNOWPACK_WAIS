@@ -35,8 +35,8 @@ sbatch job.sbatch
 bash copy_sno.sh 
 ```
 
-4. Set restart flag to `Y` or `N` in `run_openmp.sbatch`. Launch Alpine-3D mimumum working example using `openmp`. Make sure you are not in a conda environment.
+4. Set restart flag to `Y` or `N` in `job.sbatch`. Launch Alpine-3D mimumum working example. Make sure you are not in a conda environment.
 ```
 conda deactivate
-sbatch run_openmp.sbatch
+sbatch job.sbatch
 ```

@@ -1,12 +1,13 @@
 #!/bin/bash
 
+# Load modules
 module purge
 ml intel; ml impi; ml proj; ml netcdf
 
 # Are you restarting a previous Alpine-3D simulation? Yes (Y) No (N)
 RESTART=$1
-
-REDIRECT_LOGS=N
+num_nodes=$2
+num_threads_per_node=$3
 
 # Add libraries to path
 export LD_LIBRARY_PATH=../snowpack/usr/lib:${LD_LIBRARY_PATH}
@@ -14,16 +15,25 @@ export LD_LIBRARY_PATH=../snowpack/usr/lib:${LD_LIBRARY_PATH}
 # Alpine-3D binary 
 EXE=$(pwd)/../snowpack/usr/bin/alpine3d
 
+# Does the Alpine-3D binary exist. 
 if [ ! -f ${EXE} ]; then
 	EXE=`which alpine3d`
 fi
 
-echo "Running with OPENMP"
-N_EB=$2
-N_SN=$2
+# Define the number of threads per node available for energy balance and SNOWPACK calculations
+N_EB=${num_threads_per_node}
+N_SN=${num_threads_per_node}
 
-TOOL="/usr/bin/time -v"
+# If nodes > 1, use MPI, else use OPENMP
+if (( ${num_nodes} > 1 )); then 
+	echo "Running with MPI"
+	TOOL="/usr/bin/time -v mpirun -np ${num_nodes}"
+else
+	echo "Running with OPENMP"
+	TOOL="/usr/bin/time -v"
+fi
 
+# Restarting an Alpine-3D simulation (Y) or starting from scratch (N)
 if [[ ("${RESTART}" == "N") ]]; then
 	# Get simulation start and stop times
 	source timespan.inc
@@ -62,11 +72,9 @@ else
 fi
 
 date
-if [[ ("${REDIRECT_LOGS}" == "Y") ||  ("${REDIRECT_LOGS}" == "y") ]]; then
-	${A3D_CMD} > ../output/log/stdouterr.log 2>&1 $*
-else
-	${A3D_CMD} 2>&1 $*
-fi
+
+# Run Alpine-3D
+${A3D_CMD} 2>&1 $*
 ret=$?
 
 echo "Done Alpine3D Simulation. Return code=$ret"
