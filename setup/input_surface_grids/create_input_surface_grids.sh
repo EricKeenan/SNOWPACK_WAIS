@@ -37,7 +37,10 @@ echo "epsg    = 3031" >> ${tgt_poi_path}
 echo "nodata  = -9999" >> ${tgt_poi_path}
 echo "fields = easting northing altitude" >> ${tgt_poi_path}
 echo "[DATA]" >> ${tgt_poi_path}
-awk -F, '(NR>1) {print $15, $1}' ${src_poi_path} | gdaltransform -s_srs EPSG:4296 -t_srs EPSG:3031 >> ${tgt_poi_path}
+# Write only one point 
+echo "-1540866.3823673 -41575.556604363 0" >> ${tgt_poi_path}
+# Write to points determined by file
+#awk -F, '(NR>1) {print $15, $1}' ${src_poi_path} | gdaltransform -s_srs EPSG:4296 -t_srs EPSG:3031 >> ${tgt_poi_path}
 echo "Done making POI file"
 
 # Create land use file
