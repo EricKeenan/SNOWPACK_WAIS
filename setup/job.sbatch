@@ -4,7 +4,7 @@
 ########################## START  USER CONFIGURATION
 
 #SBATCH --nodes=1                         # Number of requested nodes
-#SBATCH --ntasks-per-node=4               # Number of threads per node
+#SBATCH --ntasks-per-node=16               # Number of threads per node
 #SBATCH --account=ucb164_summit1
 #SBATCH --time=01:00:00                   # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
