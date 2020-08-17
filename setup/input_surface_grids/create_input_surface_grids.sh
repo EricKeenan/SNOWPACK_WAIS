@@ -38,8 +38,15 @@ echo "nodata  = -9999" >> ${tgt_poi_path}
 echo "fields = easting northing altitude" >> ${tgt_poi_path}
 echo "[DATA]" >> ${tgt_poi_path}
 # Write only one point 
-echo "-1540866.3823673 -41575.556604363 0" >> ${tgt_poi_path}
-# Write to points determined by file
+#echo "-1540866.3823673 -41575.556604363 0" >> ${tgt_poi_path}
+# Write at atmospheric forcing grid cells
+for file in ../../input/meteo/*; do
+	X=$(awk '/^easting/' ${file} | sed 's/[^-0-9.]*//g')
+	Y=$(awk '/^northing/' ${file} | sed 's/[^-0-9.]*//g')
+	altitude=$(awk '/^altitude/' ${file} | sed 's/[^0-9.]*//g')
+	echo "${X} ${Y} ${altitude}" >> ${tgt_poi_path}
+done
+# Write to points determined by file (note the source EPSG looks strange. Are you sure that is correct?)
 #awk -F, '(NR>1) {print $15, $1}' ${src_poi_path} | gdaltransform -s_srs EPSG:4296 -t_srs EPSG:3031 >> ${tgt_poi_path}
 echo "Done making POI file"
 
