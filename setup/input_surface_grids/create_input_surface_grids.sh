@@ -12,10 +12,10 @@ ml intel; ml proj; ml gdal
 # Coordinates of upper left and lower right corners of new DEM in EPSG:3031
 # Use get_DEM_coords.ipynb to determine what exactly they need to be.
 # They need to be exact! Otherwise sub-pixel shift occurs, which is bad!
-ulx=-154000
-uly=154000
-lrx=154000
-lry=-154000
+ulx=-1542000
+uly=-2000
+lrx=-1374000
+lry=-109000
 
 # IO file paths
 src_dem_path=/pl/active/nasa_smb/Data/DEM_ANT_CS_20130901.tif
@@ -44,8 +44,19 @@ for file in ../../input/meteo/*; do
 	X=$(awk '/^easting/' ${file} | sed 's/[^-0-9.]*//g')
 	Y=$(awk '/^northing/' ${file} | sed 's/[^-0-9.]*//g')
 	altitude=$(awk '/^altitude/' ${file} | sed 's/[^0-9.]*//g')
-	echo "${X} ${Y} ${altitude}" >> ${tgt_poi_path}
+	# if ulx < X < lrx and lry < Y < uly
+	if (( $(echo "$X > $ulx" | bc -l) )); then
+		if (( $(echo "$X < $lrx" | bc -l) )); then
+			if (( $(echo "$Y > $lry" | bc -l) )); then
+				if (( $(echo "$Y < $uly" | bc -l) )); then
+					echo "	The grid cell is in the domain"
+					echo "${X} ${Y} ${altitude}" >> ${tgt_poi_path}
+				fi
+			fi
+		fi
+	fi
 done
+
 # Write to points determined by file (note the source EPSG looks strange. Are you sure that is correct?)
 #awk -F, '(NR>1) {print $15, $1}' ${src_poi_path} | gdaltransform -s_srs EPSG:4296 -t_srs EPSG:3031 >> ${tgt_poi_path}
 echo "Done making POI file"
