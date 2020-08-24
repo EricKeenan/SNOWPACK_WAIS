@@ -4,6 +4,9 @@
 module purge
 ml intel; ml impi; ml proj; ml netcdf
 
+# Write stn_lst.lst
+bash write_stn_lst.sh
+
 # Are you restarting a previous Alpine-3D simulation? Yes (Y) No (N)
 RESTART=$1
 num_nodes=$2
