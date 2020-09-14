@@ -30,8 +30,8 @@ num_nodes=${SLURM_JOB_NUM_NODES}
 # Determine the number of threads per node
 num_threads_per_node=${SLURM_JOB_CPUS_PER_NODE%%(*}
 
-# Adjust Alpine-3D horizontal spatial resolution. First argument is the target resolution (m) while the second argument is the default resolution (m). 
-bash spatial_resolution.sh 5000 1000
+# Adjust Alpine-3D horizontal spatial resolution. First argument is the target resolution (m)
+bash spatial_resolution.sh 30000
 
 # Modify io.ini MAX_RUN_TIME to reflect Slurm wall clock time.
 bash wall_clock.sh ${HH} ${MM} ${SS} ${wall_clock_buffer}

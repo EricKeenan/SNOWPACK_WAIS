@@ -1,12 +1,14 @@
 #!/bin/bash
 
+ml intel
 ml gdal
 
 # Script to adjust surface grids so that Alpine-3D can  run at an arbitrary spatial resolution. 
 
 # Define target and default spatial resolution in meters. 
 tgt_res=$1
-default_res=$2
+src_grid_path=../input/surface-grids/
+default_res=$(gdalinfo ${src_grid_path}/TSG.asc | fgrep "Pixel Size" | tr '(,' ' ' | awk '{printf "%d", $4}')
 
 # Create a new input directory if tgt_res does not equal default_res
 if (( ${tgt_res} == ${default_res} )); then
@@ -26,7 +28,6 @@ else
 	sed -i 's/surface-grids/modified_surface_grids/' io.ini	
 
 	# Create new grids with tgt_res
-	src_grid_path=../input/surface-grids/
 	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${src_grid_path}/dem.asc ${new_grids_dir}/dem.asc
 	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${src_grid_path}/dem.lus ${new_grids_dir}/dem.lus
 	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${src_grid_path}/TSG.asc ${new_grids_dir}/TSG.asc
