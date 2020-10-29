@@ -12,10 +12,10 @@ ml intel; ml proj; ml gdal
 # Coordinates of upper left and lower right corners of new DEM in EPSG:3031
 # Use get_DEM_coords.ipynb to determine what exactly they need to be.
 # They need to be exact! Otherwise sub-pixel shift occurs, which is bad!
-ulx=-1542000
-uly=-2000
-lrx=-1374000
-lry=-109000
+ulx=-1557000
+uly=13000
+lrx=-1359000
+lry=-124000
 
 # IO file paths
 src_dem_path=/pl/active/nasa_smb/Data/DEM_ANT_CS_20130901.tif

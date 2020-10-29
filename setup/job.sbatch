@@ -4,9 +4,9 @@
 ########################## START  USER CONFIGURATION
 
 #SBATCH --nodes=1                         # Number of requested nodes
-#SBATCH --ntasks-per-node=8              # Number of threads per node
+#SBATCH --ntasks-per-node=20              # Number of threads per node
 #SBATCH --account=ucb164_summit1
-#SBATCH --time=03:30:00         # Max wall time
+#SBATCH --time=06:00:00         # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
 
@@ -16,8 +16,8 @@
 #SBATCH --mail-user=eric.keenan@colorado.edu
 
 # Wall clock variables
-HH=03 # Hours in form HH, e.g. 24 is 24 hours, 01 is 1 hour.
-MM=30 # Minutes in form MM, e.g. 59 is 59 minutes, 01 is 1 minute.
+HH=06 # Hours in form HH, e.g. 24 is 24 hours, 01 is 1 hour.
+MM=00 # Minutes in form MM, e.g. 59 is 59 minutes, 01 is 1 minute.
 SS=00 # Seconds in form SS, e.g. 59 is 59 seconds, 01 is 1 second.
 wall_clock_buffer=30 # Minutes. Halt Alpine-3D calculations this many minutes before reaching wall clock time. This allows enough time to write output
 
@@ -31,7 +31,7 @@ num_nodes=${SLURM_JOB_NUM_NODES}
 num_threads_per_node=${SLURM_JOB_CPUS_PER_NODE%%(*}
 
 # Adjust Alpine-3D horizontal spatial resolution. First argument is the target resolution (m)
-bash spatial_resolution.sh 15000
+bash spatial_resolution.sh 3000
 
 # Modify io.ini MAX_RUN_TIME to reflect Slurm wall clock time.
 bash wall_clock.sh ${HH} ${MM} ${SS} ${wall_clock_buffer}
