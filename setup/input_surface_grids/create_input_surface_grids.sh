@@ -18,7 +18,7 @@ lrx=-1359000
 lry=-124000
 
 # IO file paths
-src_dem_path=/pl/active/nasa_smb/Data/DEM_ANT_CS_20130901.tif
+src_dem_path=/pl/active/nasa_smb/Data/IS2_cycle_1_2_3_DEM_noFilter.tif
 tgt_dem_path=./dem.asc
 src_poi_path=/pl/active/nasa_smb/Data/waiscoresatmhelmslater-v2-subset_pig_v1.csv
 tgt_poi_path=./dem.poi
