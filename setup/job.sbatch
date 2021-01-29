@@ -22,7 +22,7 @@ SS=00 # Seconds in form SS, e.g. 59 is 59 seconds, 01 is 1 second.
 wall_clock_buffer=60 # Minutes. Halt Alpine-3D calculations this many minutes before reaching wall clock time. This allows enough time to write output
 
 # Are you restarting a previous Alpine-3D simulation? Yes (Y) No (N)
-restart=Y
+restart=N
 
 # Determine the number of nodes 
 num_nodes=${SLURM_JOB_NUM_NODES}
