@@ -47,4 +47,10 @@ for site in $(seq ${ind0} ${indf}); do
 	fi
 done
 
-
+rm ${base_dir}/to_exec.lst
+touch ${base_dir}/to_exec.lst
+for f in ${base_dir}/../input/meteo/*.smet; do
+    stn=$(basename ${f} .smet)
+    echo "bash run.sh ${stn:4}" >> ${base_dir}/to_exec.lst
+done
+cat ${base_dir}/to_exec.lst
