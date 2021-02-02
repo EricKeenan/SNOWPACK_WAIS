@@ -4,7 +4,7 @@
 tool="/usr/bin/time -v"
 bin_path=$(pwd)/../snowpack/usr/bin/snowpack
 export LD_LIBRARY_PATH=$(pwd)/../snowpack/usr/lib/:${LD_LIBRARY_PATH}
-start="1980-01-01T00:00:00"
+start="1980-01-01T00:30:00"
 end="2019-12-31T23:30:00"
 thresh=10000
 site=$1

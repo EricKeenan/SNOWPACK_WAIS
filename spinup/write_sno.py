@@ -1,7 +1,7 @@
 # This script writes an empty .sno file for the begining of a simulation.  
 
 import sys
-
+import re
 # Define system arguments
 site = sys.argv[1]
 lon = sys.argv[2]
@@ -13,14 +13,16 @@ path = sys.argv[6]
 # Define path to write file
 fname = path + str(site) + ".sno"
 
+site_number = re.findall('\d+', site)[-1]
+
 # Open file
 f = open(fname,'w')
 
 # Write Lines
 f.write("SMET 1.1 ASCII\n")
 f.write("[HEADER]\n")
-f.write("station_id       = VIR" + site[-1] + "\n")
-f.write("station_name     = Virtual_Station_" + site[-1] + "\n")
+f.write("station_id       = VIR" + site_number + "\n")
+f.write("station_name     = Virtual_Station_" + site_number + "\n")
 f.write("longitude        = " + lon + "\n")
 f.write("latitude         = " + lat + "\n")
 f.write("altitude         = " + altitude+ "\n")
