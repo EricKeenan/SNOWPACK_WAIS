@@ -84,12 +84,12 @@ echo "Done Alpine3D Simulation. Return code=$ret"
 
 # Copy output to peta library
 d=$(date +%Y-%m-%d)
-mkdir -p /pl/active/nasa_smb/A3D_output/${d}/
-zip -r ../output/A3D_output.zip ../output/*
-cp ../output/A3D_output.zip /pl/active/nasa_smb/A3D_output/${d}/
+#mkdir -p /pl/active/nasa_smb/A3D_output/${d}/
+#zip -r ../output/A3D_output.zip ../output/*
+#cp ../output/A3D_output.zip /pl/active/nasa_smb/A3D_output/${d}/
 
 # Copy output .nc file to dropbox
-dbxcli put ../output/grids/a3d_grids.nc /Public/a3d_grids.nc
+#dbxcli put ../output/grids/a3d_grids.nc /Public/a3d_grids.nc
 
 date
 echo
