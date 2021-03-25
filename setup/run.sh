@@ -62,7 +62,8 @@ else
 	cp timespan.inc restart_timespan.inc
 	file=$(ls ../output/snofiles/1_1_* | head -1)
 	line=$(sed -n '/ProfileDate/p' $file)
-	sed -i "s/1980-01-01T01:00/${line: 19}/g" restart_timespan.inc
+	sed -i "1d" restart_timespan.inc # Remove old start date
+	sed -i "1 iBEGIN=\"${line: 19}\"" restart_timespan.inc # Add new start date
 	source restart_timespan.inc
 
         A3D_CMD="${TOOL} ${EXE} \
