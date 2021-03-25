@@ -5,7 +5,7 @@
 
 #SBATCH --nodes=1                         # Number of requested nodes
 #SBATCH --ntasks-per-node=24              # Number of threads per node
-#SBATCH --account=ucb164_summit1
+#SBATCH --account=ucb204_summit1
 #SBATCH --time=24:00:00         # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
