@@ -10,3 +10,19 @@ VW::create              =       Windcomponents
 DW::filter1             = TRANSFORMWINDVECTOR
 DW::arg1::COORDPARAM    = 3031          ; Antarctic Polar Stereographic
 ```
+
+Wind speed and direction can be calculated using the `WindNinja` model and an [existing workflow](https://github.com/EricKeenan/antarctic-windninja). Once the appropriate downscalling is performed, the data can be provided to `Alpine-3D` with the following
+```bash
+cd /scratch/summit/erke2265/SNOWPACK_WAIS/input/surface-grids
+mkdir wind
+cd wind
+cp /scratch/summit/erke2265/antarctic-windninja/PIG/processed_output/*.asc .
+
+mkdir VW_DRIFT
+cd VW_DRIFT
+for f in ../*.asc
+do 
+	name=$(basename -s .asc ${f})
+	ln -s ${f} ${name}_DRIFT.asc
+done
+```
