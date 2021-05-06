@@ -15,5 +15,6 @@ dependencies:
   - palettable
   - dask
   - netcdf4
+  - scikit-learn
 prefix: /projects/erke2265/miniconda/envs/alpine3d
 

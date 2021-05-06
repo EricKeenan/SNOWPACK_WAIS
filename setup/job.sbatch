@@ -6,9 +6,9 @@
 #SBATCH --nodes=1                         # Number of requested nodes
 #SBATCH --ntasks-per-node=24              # Number of threads per node
 #SBATCH --account=ucb204_summit1
-#SBATCH --time=24:00:00         # Max wall time
+#SBATCH --time=00:30:00         # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
-#SBATCH --partition=shas                  # Specify Summit haswell nodes
+#SBATCH --partition=shas-testing                 # Specify Summit haswell nodes
 
 #SBATCH --job-name=alpine3d               # Job submission name
 #SBATCH --output=../output/log/%x.%j.out  # Output file name with Job ID
