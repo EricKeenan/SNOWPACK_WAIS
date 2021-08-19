@@ -36,4 +36,25 @@ else
 	cp ${src_grid_path}/dem.poi ${new_grids_dir}/dem.poi 
 	# The copied POI file currently causes A3D to crash because it contains points outside of the domain. So far now I remove all data points from the file.
 	sed -i '/^-/d' ${new_grids_dir}/dem.poi 
+
+	# Modify the resolution of the wind direction and speed files
+	# Loop over each file in the directory
+ 	FILES="../input/surface-grids/wind/198001*.asc"
+ 	new_winds_grid_dir=${new_grids_dir}/wind/
+ 	rm -rf ${new_winds_grid_dir}
+ 	mkdir ${new_winds_grid_dir}
+	rm -r ${new_winds_grid_dir}/VW_DRIFT
+	mkdir -p ${new_winds_grid_dir}/VW_DRIFT	
+
+ 	for f in $FILES
+ 	do
+ 		filename=$(basename ${f})
+        	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${f} ${new_winds_grid_dir}/${filename}
+
+		if [ "${filename: -6}" == "VW.asc" ]
+		then
+			cp ${new_winds_grid_dir}/${filename} ${new_winds_grid_dir}/VW_DRIFT/${filename}
+			mv ${new_winds_grid_dir}/VW_DRIFT/${filename} ${new_winds_grid_dir}/VW_DRIFT/${filename:: 15}VW_DRIFT.asc
+		fi
+    done
 fi
