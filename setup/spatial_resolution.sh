@@ -39,7 +39,8 @@ else
 
 	# Modify the resolution of the wind direction and speed files
 	# Loop over each file in the directory
- 	FILES="../input/surface-grids/wind/198001*.asc"
+ 	#FILES="../input/surface-grids/wind/198001*.asc"
+	FILES="../input/surface-grids/wind/1980*.asc"
  	new_winds_grid_dir=${new_grids_dir}/wind/
  	rm -rf ${new_winds_grid_dir}
  	mkdir ${new_winds_grid_dir}
