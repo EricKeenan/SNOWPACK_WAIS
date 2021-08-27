@@ -30,7 +30,7 @@ N_SN=${num_threads_per_node}
 # If nodes > 1, use MPI, else use OPENMP
 if (( ${num_nodes} > 1 )); then 
 	echo "Running with MPI"
-	TOOL="/usr/bin/time -v mpirun -np ${num_nodes}"
+	TOOL="/usr/bin/time -v mpirun -v -np ${num_nodes}"
 else
 	echo "Running with OPENMP"
 	TOOL="/usr/bin/time -v"
