@@ -3,10 +3,10 @@
 
 ########################## START  USER CONFIGURATION
 
-#SBATCH --nodes=1                         # Number of requested nodes
-#SBATCH --ntasks-per-node=24              # Number of threads per node
+#SBATCH --ntasks=1                         # Number of requested nodes
+#SBATCH --cpus-per-task=4              # Number of threads per node
 #SBATCH --account=ucb204_summit1
-#SBATCH --time=00:30:00         # Max wall time
+#SBATCH --time=00:10:00         # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas-testing                 # Specify Summit haswell nodes
 
@@ -24,12 +24,6 @@ wall_clock_buffer=10 # Minutes. Halt Alpine-3D calculations this many minutes be
 # Are you restarting a previous Alpine-3D simulation? Yes (Y) No (N)
 restart=N
 
-# Determine the number of nodes 
-num_nodes=${SLURM_JOB_NUM_NODES}
-
-# Determine the number of threads per node
-num_threads_per_node=${SLURM_JOB_CPUS_PER_NODE%%(*}
-
 # Adjust Alpine-3D horizontal spatial resolution. First argument is the target resolution (m)
 bash spatial_resolution.sh 1000
 
@@ -37,4 +31,5 @@ bash spatial_resolution.sh 1000
 bash wall_clock.sh ${HH} ${MM} ${SS} ${wall_clock_buffer}
 
 # Run Alpine-3D
-bash run.sh ${restart} ${num_nodes} ${num_threads_per_node}
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+source run.sh ${restart} ${SLURM_NTASKS} ${SLURM_CPUS_PER_TASK}
