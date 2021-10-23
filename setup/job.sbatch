@@ -3,20 +3,24 @@
 
 ########################## START  USER CONFIGURATION
 
-#SBATCH --ntasks=1                         # Number of requested nodes
-#SBATCH --cpus-per-task=4              # Number of threads per node
+#SBATCH --ntasks=4                         # Number of requested nodes
+#SBATCH --cpus-per-task=24              # Number of threads per node
+#SBATCH --tasks-per-node=1
 #SBATCH --account=ucb204_summit1
-#SBATCH --time=00:10:00         # Max wall time
+#SBATCH --time=22:00:00         # Max wall time
 #SBATCH --qos=normal                      # Specify testing QOS
-#SBATCH --partition=shas-testing                 # Specify Summit haswell nodes
+#SBATCH --partition=shas                 # Specify Summit haswell nodes
 
 #SBATCH --job-name=alpine3d               # Job submission name
 #SBATCH --output=../output/log/%x.%j.out  # Output file name with Job ID
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=eric.keenan@colorado.edu
 
+unset SLURM_MEM_PER_NODE
+unset SLURM_MEM_PER_GPU
+
 # Wall clock variables
-HH=24 # Hours in form HH, e.g. 24 is 24 hours, 01 is 1 hour.
+HH=22 # Hours in form HH, e.g. 24 is 24 hours, 01 is 1 hour.
 MM=00 # Minutes in form MM, e.g. 59 is 59 minutes, 01 is 1 minute.
 SS=00 # Seconds in form SS, e.g. 59 is 59 seconds, 01 is 1 second.
 wall_clock_buffer=10 # Minutes. Halt Alpine-3D calculations this many minutes before reaching wall clock time. This allows enough time to write output
