@@ -14,7 +14,7 @@ fname = path + "run.ini"
 f = open(fname,'w')
 
 # Calculate boundary condition
-T_s = xr.open_dataset("/pl/active/nasa_smb/MERRA2/yearly_files/TS_mean_1980_2017.nc")
+T_s = xr.open_dataset("/pl/active/nasa_smb/MERRA2_meta_data/TS_mean_1980_2017.nc")
 T_s = T_s["TS"].sel(lon=float(lon), lat=float(lat), method="nearest")
 T_s = float(T_s.values)
 

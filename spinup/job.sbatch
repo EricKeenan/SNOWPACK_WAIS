@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #SBATCH --nodes=1                         # Number of requested nodes
-#SBATCH --account=ucb164_summit1 
+#SBATCH --account=ucb204_summit1 
 #SBATCH --time=24:00:00                   
 #SBATCH --qos=normal                      # Specify testing QOS
 #SBATCH --partition=shas                  # Specify Summit haswell nodes
 #SBATCH --ntasks=1                        # Number of tasks per job
-#SBATCH --array=1-64
+#SBATCH --array=1-1
 
 #SBATCH --job-name=A3D_spinup             # Job submission name
 #SBATCH --output=./io/sbatch_out_files/%x.%j.out     # Output file name with Job ID
