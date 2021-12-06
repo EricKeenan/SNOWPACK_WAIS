@@ -10,6 +10,7 @@ output/*
 analysis/.ipynb_checkpoints/*
 analysis/dask-worker-space/*
 spinup/io/*
+figures/images/*
 
 # File exceptions
 !output/log/.gitkeep
