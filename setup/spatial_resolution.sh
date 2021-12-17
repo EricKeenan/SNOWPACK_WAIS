@@ -28,9 +28,9 @@ else
 	sed -i 's/surface-grids/modified_surface_grids/' io.ini	
 
 	# Create new grids with tgt_res
-	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${src_grid_path}/dem.asc ${new_grids_dir}/dem.asc
-	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${src_grid_path}/dem.lus ${new_grids_dir}/dem.lus
-	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${src_grid_path}/TSG.asc ${new_grids_dir}/TSG.asc
+	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} -r bilinear ${src_grid_path}/dem.asc ${new_grids_dir}/dem.asc
+	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} -r bilinear ${src_grid_path}/dem.lus ${new_grids_dir}/dem.lus
+	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} -r bilinear ${src_grid_path}/TSG.asc ${new_grids_dir}/TSG.asc
 
 	# Copy original POI file
 	cp ${src_grid_path}/dem.poi ${new_grids_dir}/dem.poi 
@@ -40,7 +40,7 @@ else
 	# Modify the resolution of the wind direction and speed files
 	# Loop over each file in the directory
  	#FILES="../input/surface-grids/wind/198001*.asc"
-	FILES="../input/surface-grids/wind/1980*.asc"
+	FILES="../input/surface-grids/wind/2015*.asc"
  	new_winds_grid_dir=${new_grids_dir}/wind/
  	rm -rf ${new_winds_grid_dir}
  	mkdir ${new_winds_grid_dir}
@@ -50,7 +50,7 @@ else
  	for f in $FILES
  	do
  		filename=$(basename ${f})
-        	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} ${f} ${new_winds_grid_dir}/${filename}
+        	gdal_translate -of AAIGrid -tr ${tgt_res} ${tgt_res} -r bilinear ${f} ${new_winds_grid_dir}/${filename}
 
 		if [ "${filename: -6}" == "VW.asc" ]
 		then
